@@ -43,6 +43,7 @@ class SheepGamePage extends StatelessWidget {
           title:  AutoSizeText("Saute, Mouton, saute !", maxLines: 1),
           actions: [
             Container(
+
                 width: 25,
                 child: Image.asset('assets/images/Dashboard/demo@2x.png',
                     color: mainColor)),

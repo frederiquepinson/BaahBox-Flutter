@@ -75,16 +75,16 @@ class SheepGame extends BBGame with TapCallbacks, HasCollisionDetection {
 
   Future<void> loadAssetsInCache() async {
     await Flame.images.loadAll(<String>[
-      'Jeux/Sheep/bang.png',
-      'Jeux/Sheep/bim.png',
-      'Jeux/Sheep/gate.png',
-      'Jeux/Sheep/floor.png',
-      'Jeux/Sheep/sheep_01.png',
-      'Jeux/Sheep/sheep_02.png',
-      'Jeux/Sheep/sheep_jumping.png',
-      'Jeux/Sheep/sheep_bump.png',
-      'Jeux/Sheep/happy_sheep_01.png',
-      'Jeux/Sheep/happy_sheep_02.png',
+      'Games/Sheep/bang.png',
+      'Games/Sheep/bim.png',
+      'Games/Sheep/gate.png',
+      'Games/Sheep/floor.png',
+      'Games/Sheep/sheep_01.png',
+      'Games/Sheep/sheep_02.png',
+      'Games/Sheep/sheep_jumping.png',
+      'Games/Sheep/sheep_bump.png',
+      'Games/Sheep/happy_sheep_01.png',
+      'Games/Sheep/happy_sheep_02.png',
       'trex.png',
     ]);
   }

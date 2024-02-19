@@ -17,6 +17,7 @@
  *
  */
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:ui';
@@ -99,9 +100,9 @@ class GameRow extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(
+                    AutoSizeText(
                       game.title,
-                      style: TextStyle(color: Colors.white, fontSize: 15.0),
+                      style: TextStyle(color: Colors.white, fontSize: 25.0),
                       textAlign: TextAlign.end,
 
                     ),

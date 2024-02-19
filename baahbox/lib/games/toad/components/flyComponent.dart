@@ -17,3 +17,57 @@
  *
  */
 
+import 'dart:math' as math;
+import 'package:flame/flame.dart';
+import 'package:flame/components.dart';
+import 'package:baahbox/games/toad/toadGame.dart';
+import 'package:flame/geometry.dart';
+
+class FlyComponent extends SpriteComponent
+    with  HasVisibility, HasGameRef<ToadGame> {
+  FlyComponent()
+      : super(size: Vector2(50, 50), anchor: Anchor.center);
+
+  final flySprite = Sprite(Flame.images.fromCache('Jeux/Toad/fly@3x.png'));
+
+
+  @override
+  Future<void> onLoad() async {
+    super.onLoad();
+    initialize();
+
+  }
+
+  void initialize() {
+    this.sprite = flySprite;
+    var ratio = flySprite.srcSize.x / flySprite.srcSize.y;
+    var width = gameRef.size.x/10;
+    size = Vector2(width,width/ratio);
+    position =  Vector2(gameRef.size.x / 2, gameRef.size.y - size.y -50);
+    show();
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+  }
+
+  void hide() {
+    isVisible = false;
+  }
+
+  void show() {
+    isVisible = true;
+  }
+
+
+
+
+
+  void hit() {
+    //setSpriteTo(3);
+    // game.add(BimComponent(
+    //    position: Vector2(position.x + size.x/2, position.y - size.y - 20)));
+  }
+}
+

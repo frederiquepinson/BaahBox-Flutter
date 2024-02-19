@@ -31,7 +31,7 @@ class MarkComponent extends SpriteComponent
     anchor: Anchor.bottomLeft,
   );
 
-  final _sprite = Sprite(Flame.images.fromCache('Jeux/Sheep/gate.png'));
+  final _sprite = Sprite(Flame.images.fromCache('Games/Sheep/gate.png'));
 
   @override
   Future<void> onLoad() async {
