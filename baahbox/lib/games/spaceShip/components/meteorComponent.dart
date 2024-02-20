@@ -48,7 +48,7 @@ class MeteorComponent extends SpriteComponent
   void initialize() {
     var rng = new Random();
     var i = rng.nextInt(6) + 1;
-    var imageName = 'Jeux/Spaceship/meteor_0$i@3x.png';
+    var imageName = 'Games/Spaceship/meteor_0$i@3x.png';
     final newSprite = Sprite(Flame.images.fromCache(imageName));
     this.sprite = newSprite;
     this.size = newSprite.originalSize / 10;

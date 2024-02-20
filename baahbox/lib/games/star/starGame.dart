@@ -52,8 +52,8 @@ class StarGame extends BBGame with TapCallbacks {
   Future<void> onLoad() async {
     await super.onLoad();
     await Flame.images.loadAll(<String>[
-      'Jeux/Star/jeu_etoile_01@2x.png',
-      'Jeux/Star/jeu_etoile_02@2x.png',
+      'Games/Star/jeu_etoile_01@2x.png',
+      'Games/Star/jeu_etoile_02@2x.png',
     ]);
     loadInfoComponents();
     title = instructionTitle;

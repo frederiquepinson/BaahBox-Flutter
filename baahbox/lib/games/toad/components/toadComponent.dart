@@ -29,13 +29,13 @@ class ToadComponent extends SpriteComponent
   ToadComponent()
       : super(size: Vector2(100, 100), anchor: Anchor.bottomCenter);
 
-  final toadSprite = Sprite(Flame.images.fromCache('Jeux/Toad/toad@3x.png'));
-  final toadBlinkSprite = Sprite(Flame.images.fromCache('Jeux/Toad/toad_blink@3x.png'));
+  final toadSprite = Sprite(Flame.images.fromCache('Games/Toad/toad@3x.png'));
+  final toadBlinkSprite = Sprite(Flame.images.fromCache('Games/Toad/toad_blink@3x.png'));
 
 
   final blinkingImages = [
-    Flame.images.fromCache('Jeux/Toad/toad@3x.png'),
-    Flame.images.fromCache('Jeux/Toad/toad_blink@3x.png'),
+    Flame.images.fromCache('Games/Toad/toad@3x.png'),
+    Flame.images.fromCache('Games/Toad/toad_blink@3x.png'),
   ];
 
   @override

@@ -17,34 +17,41 @@
  *
  */
 
+import 'dart:io';
 import 'dart:math' as math;
+import 'package:flame/effects.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/components.dart';
 import 'package:baahbox/games/toad/toadGame.dart';
-import 'package:flame/geometry.dart';
 
 class FlyComponent extends SpriteComponent
     with  HasVisibility, HasGameRef<ToadGame> {
-  FlyComponent()
-      : super(size: Vector2(50, 50), anchor: Anchor.center);
+  FlyComponent({required super.size}) : super(anchor: Anchor.center);
 
-  final flySprite = Sprite(Flame.images.fromCache('Jeux/Toad/fly@3x.png'));
+  final flySprite = Sprite(Flame.images.fromCache('Games/Toad/fly@3x.png'));
 
+  late final _timer = TimerComponent(
+    period: 3,
+    onTick: disappear,
+    autoStart: false,
+  );
 
   @override
   Future<void> onLoad() async {
     super.onLoad();
+    await add(_timer);
     initialize();
-
   }
 
   void initialize() {
     this.sprite = flySprite;
     var ratio = flySprite.srcSize.x / flySprite.srcSize.y;
     var width = gameRef.size.x/10;
-    size = Vector2(width,width/ratio);
-    position =  Vector2(gameRef.size.x / 2, gameRef.size.y - size.y -50);
+
+    gameRef.registerToFlyNet(position);
     show();
+    _timer.timer.start();
+
   }
 
   @override
@@ -60,14 +67,14 @@ class FlyComponent extends SpriteComponent
     isVisible = true;
   }
 
+  void disappear() {
+    this.add(OpacityEffect.fadeOut(EffectController(duration: 0.75)));
+    gameRef.unRegisterFromFlyNet(position);
+    removeFromParent();
+  }
 
-
-
-
-  void hit() {
-    //setSpriteTo(3);
-    // game.add(BimComponent(
-    //    position: Vector2(position.x + size.x/2, position.y - size.y - 20)));
+  void takeHit() {
+    disappear();
   }
 }
 
