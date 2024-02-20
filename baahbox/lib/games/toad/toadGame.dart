@@ -96,18 +96,12 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
 
   Future<void> loadAssetsInCache() async {
     await Flame.images.loadAll(<String>[
-      'Games/Toad/crapaud@3x.png',
-      'Games/Toad/crapaud_compteur_mouche_plein@3x.png',
-      'Games/Toad/crapaud_compteur_mouche_vide@3x.png',
-      'Games/Toad/crapaud_langue@3x.png',
-      'Games/Toad/crapaud_mouche@3x.png',
-      'Games/Toad/fly@3x.png',
-      'Games/Toad/fly_point_0@3x.png',
-      'Games/Toad/fly_point_1@3x.png',
-      'Games/Toad/toad@3x.png',
-      'Games/Toad/toad_blink@3x.png',
-      'Games/Toad/toad_menu@3x.png',
-      'Games/Toad/tongue@3x.png',
+      'Games/Toad/fly.png',
+      'Games/Toad/fly_score_empty.png',
+      'Games/Toad/fly_score_full.png',
+      'Games/Toad/toad.png',
+      'Games/Toad/toad_blink.png',
+      'Games/Toad/tongue.png',
     ]);
   }
 

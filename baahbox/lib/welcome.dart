@@ -17,12 +17,12 @@
  *
  */
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:ui';
 import 'package:baahbox/routes/routes.dart';
 import 'package:baahbox/constants/enums.dart';
+
 
 class WelcomePage extends StatelessWidget with WidgetsBindingObserver {
   const WelcomePage({Key? key}) : super(key: key);
@@ -38,19 +38,20 @@ class WelcomePage extends StatelessWidget with WidgetsBindingObserver {
               color: mainColor, fontWeight: FontWeight.bold, fontSize: 25),
           centerTitle: true,
           title: Text("Baah !"),
-          leading: null,
+         // leading: null,
           automaticallyImplyLeading: false,
           actions: [
             Container(
                 width: 25,
-                child: Image.asset('assets/images/Dashboard/demo@2x.png',
+                child: Image.asset('assets/images/Dashboard/demo_icon.png',
                     color: mainColor)),
-            SizedBox(
-              width: 15,
-            ),
+            // SizedBox(
+            //   width: 8,
+            // ),
             IconButton(
                 icon: Image.asset(
-                    'assets/images/Dashboard/settings_icon@2x.png',
+                    'assets/images/Dashboard/settings_icon.png',
+                    width: 25, height: 25,
                     color: mainColor),
                 onPressed: () => Get.toNamed('/settings')),
           ],
@@ -59,7 +60,9 @@ class WelcomePage extends StatelessWidget with WidgetsBindingObserver {
         body: Container(
           child: ListView(
               padding: const EdgeInsets.all(0),
-              children: <Widget>[GameRow(BBGameList.star, BBRoute.star.path),
+              children: <Widget>[
+                GameRow(BBGameList.star, BBRoute.star.path),
+
         GameRow(BBGameList.balloon, BBRoute.balloon.path),
         GameRow(BBGameList.sheep, BBRoute.sheep.path),
         GameRow(BBGameList.starship, BBRoute.spaceShip.path),
@@ -94,17 +97,18 @@ class GameRow extends StatelessWidget {
                 children: [
               Image(
                   alignment: Alignment.centerLeft,
-                  image: AssetImage(game.mainAsset)),
-                  Spacer(),
+                  image: AssetImage(game.mainAsset),
+                width: 60),
+              Spacer(),
               Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    AutoSizeText(
+                    Text(
                       game.title,
-                      style: TextStyle(color: Colors.white, fontSize: 25.0),
+                      style: TextStyle(color: Colors.white, fontSize: 15.0),
                       textAlign: TextAlign.end,
-
+                      maxLines: 2
                     ),
                     SizedBox(height: 10),
                     Row(

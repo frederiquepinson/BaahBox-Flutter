@@ -20,13 +20,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:location_permissions/location_permissions.dart';
+//import 'package:location_permissions/location_permissions.dart';
 import 'dart:io' show Platform;
 import 'package:get/get.dart';
 import 'package:baahbox/model/sensorInput.dart';
 import 'package:baahbox/controllers/appController.dart';
 import 'package:baahbox/routes/routes.dart';
 import 'package:baahbox/services/ble/getXble/getx_ble.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ConnectionPage extends StatefulWidget {
   const ConnectionPage({Key? key}) : super(key: key);
@@ -111,10 +112,17 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
   void _startScan() async {
     bool goForIt = false;
-    PermissionStatus permission;
+    //PermissionStatus permission;
     if (Platform.isAndroid) {
-      permission = await LocationPermissions().requestPermissions();
-      if (permission == PermissionStatus.granted) goForIt = true;
+      Map<Permission, PermissionStatus> statuses = await
+      [ Permission.bluetoothScan,
+        Permission.bluetoothAdvertise,
+        Permission.bluetoothConnect,
+      Permission.locationWhenInUse, Permission.location].
+      request();
+      goForIt = true;
+
+   //   if (permission == PermissionStatus.granted) goForIt = true;
     } else if (Platform.isIOS) {
       goForIt = true;
     }

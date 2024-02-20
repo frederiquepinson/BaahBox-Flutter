@@ -37,7 +37,7 @@ class MarkComponent extends SpriteComponent
   Future<void> onLoad() async {
     super.onLoad();
     this.sprite = _sprite;
-    size = _sprite.srcSize /25;
+    size = _sprite.srcSize /30;
   }
 
   void disappear() {

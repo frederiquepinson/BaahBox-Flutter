@@ -22,6 +22,7 @@ environment:
   sdk: ">=3.0.0 <4.0.0"
 dependencies:
   flame: ^1.15.0
+  flame_svg: any
   flutter:
     sdk: flutter
   get:
@@ -30,8 +31,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons:
-  flutter_reactive_ble:
-  location_permissions: ^4.0.0
+  flutter_reactive_ble: ^5.3.1
+  permission_handler:
   custom_sliding_segmented_control: ^1.8.1
 
   meta:

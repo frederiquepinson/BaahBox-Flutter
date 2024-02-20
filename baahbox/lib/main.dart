@@ -32,7 +32,6 @@ void main() async {
   final SettingsController settingsController = Get.put(SettingsController());
 
   return runApp(
-
      GetMaterialApp(
         title: 'Baah Box Games!',
       //  home: const BleConnectionPage(),

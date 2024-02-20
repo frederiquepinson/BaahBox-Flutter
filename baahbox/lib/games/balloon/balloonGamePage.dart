@@ -44,14 +44,14 @@ class BalloonGamePage extends StatelessWidget {
           actions: [
             Container(
                 width: 25,
-                child: Image.asset('assets/images/Dashboard/demo@2x.png',
+                child: Image.asset('assets/images/Dashboard/demo_icon.png',
                     color: mainColor)),
-            SizedBox(
-              width: 15,
-            ),
+            // SizedBox(
+            //   width: 15,
+            // ),
             IconButton(
                 icon: Image.asset(
-                    'assets/images/Dashboard/settings_icon@2x.png',
+                    'assets/images/Dashboard/settings_icon.png',  width: 25, height: 25,
                     color: mainColor),
                 onPressed: () => Get.toNamed('/settings')),
           ],

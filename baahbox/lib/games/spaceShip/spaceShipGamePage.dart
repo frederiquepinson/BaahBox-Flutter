@@ -40,18 +40,19 @@ class SpaceShipGamePage extends StatelessWidget {
           titleTextStyle: TextStyle(
               color: mainColor, fontWeight: FontWeight.bold, fontSize: 25),
           centerTitle: true,
-          title:  AutoSizeText("La bataille de l'espace", maxLines: 1),
+          title:  AutoSizeText("La bataille de l'espace ", maxLines: 1),
           actions: [
             Container(
                 width: 25,
-                child: Image.asset('assets/images/Dashboard/demo@2x.png',
+                child: Image.asset('assets/images/Dashboard/demo_icon.png',
                     color: mainColor)),
-            SizedBox(
-              width: 15,
-            ),
+            // SizedBox(
+            //   width: 15,
+            // ),
             IconButton(
                 icon: Image.asset(
-                    'assets/images/Dashboard/settings_icon@2x.png',
+                    'assets/images/Dashboard/settings_icon.png',
+                    width: 25, height: 25,
                     color: mainColor),
                 onPressed: () => Get.toNamed('/settings')),
           ],

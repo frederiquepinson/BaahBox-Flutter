@@ -28,7 +28,7 @@ class FlyComponent extends SpriteComponent
     with  HasVisibility, HasGameRef<ToadGame> {
   FlyComponent({required super.size}) : super(anchor: Anchor.center);
 
-  final flySprite = Sprite(Flame.images.fromCache('Games/Toad/fly@3x.png'));
+  final flySprite = Sprite(Flame.images.fromCache('Games/Toad/fly.png'));
 
   late final _timer = TimerComponent(
     period: 3,
@@ -47,6 +47,7 @@ class FlyComponent extends SpriteComponent
     this.sprite = flySprite;
     var ratio = flySprite.srcSize.x / flySprite.srcSize.y;
     var width = gameRef.size.x/10;
+    size = Vector2(width,width/ratio);
 
     gameRef.registerToFlyNet(position);
     show();
