@@ -45,9 +45,6 @@ class WelcomePage extends StatelessWidget with WidgetsBindingObserver {
                 width: 25,
                 child: Image.asset('assets/images/Dashboard/demo_icon.png',
                     color: mainColor)),
-            // SizedBox(
-            //   width: 8,
-            // ),
             IconButton(
                 icon: Image.asset(
                     'assets/images/Dashboard/settings_icon.png',
