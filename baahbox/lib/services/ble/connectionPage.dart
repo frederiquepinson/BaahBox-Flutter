@@ -241,7 +241,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
           actions: [
             IconButton(
               icon: Image.asset('assets/images/Dashboard/bluetooth.png',
-                  color: Colors.lightBlueAccent),
+                  color: Colors.lightBlueAccent, height: 20, width: 20),
               onPressed: () {
                 if (_scanning) {
                   bleController.scanner.stopScan();
@@ -289,7 +289,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
               ),
               Container(
                   margin: const EdgeInsets.all(5.0),
-                  height: 150,
+                  height: 75,
                   child: ListView.builder(
                     itemCount: _foundBleUARTDevices.length,
                     itemBuilder: (context, index) => ListTile(
@@ -312,7 +312,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                     ),
                   )),
               SizedBox(
-                height: 30,
+                height: 10,
               ),
               Padding(
                   padding: EdgeInsets.all(5),
@@ -341,7 +341,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: Colors.blue, width: 2)),
-                  height: 150,
+                  height: 100,
                   child: Scrollbar(
                       child: SingleChildScrollView(
                           child: Padding(padding: EdgeInsets.all(5), child: Text(

@@ -46,14 +46,11 @@ class ToadGamePage extends StatelessWidget {
                 width: 25,
                 child: Image.asset('assets/images/Dashboard/demo_icon.png',
                      color: mainColor)),
-            SizedBox(
-              width: 15,
-            ),
             IconButton(
                 icon: Image.asset(
                     'assets/images/Dashboard/settings_icon.png',
                     width: 25, height: 25, color: mainColor),
-                onPressed: () => Get.toNamed('/sheepSettings')),
+                onPressed: () => Get.toNamed('/toadSettings')),
           ],
         ),
         body: Stack(children: [
