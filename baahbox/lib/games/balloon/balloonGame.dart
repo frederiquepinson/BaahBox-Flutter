@@ -53,11 +53,11 @@ class BalloonGame extends BBGame with TapCallbacks {
     feedback = "";
     super.onLoad();
     await Flame.images.loadAll(<String>[
-      'Jeux/Balloon/ballon_00@2x.png',
-      'Jeux/Balloon/ballon_01@2x.png',
-      'Jeux/Balloon/ballon_02@2x.png',
-      'Jeux/Balloon/ballon_03@2x.png',
-      'Jeux/Balloon/ballon_04@2x.png',
+      'Games/Balloon/ballon_00@2x.png',
+      'Games/Balloon/ballon_01@2x.png',
+      'Games/Balloon/ballon_02@2x.png',
+      'Games/Balloon/ballon_03@2x.png',
+      'Games/Balloon/ballon_04@2x.png',
     ]);
     input = 0;
     _balloon = BalloonComponent();

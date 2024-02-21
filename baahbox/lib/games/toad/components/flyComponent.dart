@@ -17,3 +17,65 @@
  *
  */
 
+import 'dart:io';
+import 'dart:math' as math;
+import 'package:flame/effects.dart';
+import 'package:flame/flame.dart';
+import 'package:flame/components.dart';
+import 'package:baahbox/games/toad/toadGame.dart';
+
+class FlyComponent extends SpriteComponent
+    with  HasVisibility, HasGameRef<ToadGame> {
+  FlyComponent({required super.size}) : super(anchor: Anchor.center);
+
+  final flySprite = Sprite(Flame.images.fromCache('Games/Toad/fly.png'));
+
+  late final _timer = TimerComponent(
+    period: 3,
+    onTick: disappear,
+    autoStart: false,
+  );
+
+  @override
+  Future<void> onLoad() async {
+    super.onLoad();
+    await add(_timer);
+    initialize();
+  }
+
+  void initialize() {
+    this.sprite = flySprite;
+    var ratio = flySprite.srcSize.x / flySprite.srcSize.y;
+    var width = gameRef.size.x/10;
+    size = Vector2(width,width/ratio);
+
+    gameRef.registerToFlyNet(position);
+    show();
+    _timer.timer.start();
+
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+  }
+
+  void hide() {
+    isVisible = false;
+  }
+
+  void show() {
+    isVisible = true;
+  }
+
+  void disappear() {
+    this.add(OpacityEffect.fadeOut(EffectController(duration: 0.75)));
+    gameRef.unRegisterFromFlyNet(position);
+    removeFromParent();
+  }
+
+  void takeHit() {
+    disappear();
+  }
+}
+

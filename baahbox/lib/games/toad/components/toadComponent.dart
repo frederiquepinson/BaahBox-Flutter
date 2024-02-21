@@ -29,13 +29,13 @@ class ToadComponent extends SpriteComponent
   ToadComponent()
       : super(size: Vector2(100, 100), anchor: Anchor.bottomCenter);
 
-  final toadSprite = Sprite(Flame.images.fromCache('Jeux/Toad/toad@3x.png'));
-  final toadBlinkSprite = Sprite(Flame.images.fromCache('Jeux/Toad/toad_blink@3x.png'));
+  final toadSprite = Sprite(Flame.images.fromCache('Games/Toad/toad.png'));
+  final toadBlinkSprite = Sprite(Flame.images.fromCache('Games/Toad/toad_blink.png'));
 
 
   final blinkingImages = [
-    Flame.images.fromCache('Jeux/Toad/toad@3x.png'),
-    Flame.images.fromCache('Jeux/Toad/toad_blink@3x.png'),
+    Flame.images.fromCache('Games/Toad/toad.png'),
+    Flame.images.fromCache('Games/Toad/toad_blink.png'),
   ];
 
   @override
@@ -48,7 +48,7 @@ class ToadComponent extends SpriteComponent
   void initialize() {
     this.sprite = toadSprite;
     var ratio = toadSprite.srcSize.x / toadSprite.srcSize.y;
-    var width = gameRef.size.x/3;
+    var width = gameRef.size.x * 3/8;
     size = Vector2(width,width/ratio);
     position =  Vector2(gameRef.size.x / 2, gameRef.size.y - size.y -50);
     angle = nativeAngle;

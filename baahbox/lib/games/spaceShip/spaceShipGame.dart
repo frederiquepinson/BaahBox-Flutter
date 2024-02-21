@@ -91,17 +91,17 @@ class SpaceShipGame extends BBGame with TapCallbacks, HasCollisionDetection {
 
   Future<void> loadAssetsInCache() async {
     await Flame.images.loadAll(<String>[
-      'Jeux/Spaceship/spaceship_left@3x.png',
-      'Jeux/Spaceship/spaceship_right@3x.png',
-      'Jeux/Spaceship/spaceship_nml@3x.png',
-      'Jeux/Spaceship/meteor_01@3x.png',
-      'Jeux/Spaceship/meteor_02@3x.png',
-      'Jeux/Spaceship/meteor_03@3x.png',
-      'Jeux/Spaceship/meteor_04@3x.png',
-      'Jeux/Spaceship/meteor_05@3x.png',
-      'Jeux/Spaceship/meteor_06@3x.png',
-      'Jeux/Spaceship/space_life@3x.png',
-      'Jeux/Spaceship/crash.png',
+      'Games/Spaceship/spaceship_left@3x.png',
+      'Games/Spaceship/spaceship_right@3x.png',
+      'Games/Spaceship/spaceship_nml@3x.png',
+      'Games/Spaceship/meteor_01@3x.png',
+      'Games/Spaceship/meteor_02@3x.png',
+      'Games/Spaceship/meteor_03@3x.png',
+      'Games/Spaceship/meteor_04@3x.png',
+      'Games/Spaceship/meteor_05@3x.png',
+      'Games/Spaceship/meteor_06@3x.png',
+      'Games/Spaceship/space_life@3x.png',
+      'Games/Spaceship/crash.png',
     ]);
   }
 

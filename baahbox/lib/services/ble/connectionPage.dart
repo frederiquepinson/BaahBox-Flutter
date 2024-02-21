@@ -20,13 +20,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:location_permissions/location_permissions.dart';
+//import 'package:location_permissions/location_permissions.dart';
 import 'dart:io' show Platform;
 import 'package:get/get.dart';
 import 'package:baahbox/model/sensorInput.dart';
 import 'package:baahbox/controllers/appController.dart';
 import 'package:baahbox/routes/routes.dart';
 import 'package:baahbox/services/ble/getXble/getx_ble.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ConnectionPage extends StatefulWidget {
   const ConnectionPage({Key? key}) : super(key: key);
@@ -111,10 +112,17 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
   void _startScan() async {
     bool goForIt = false;
-    PermissionStatus permission;
+    //PermissionStatus permission;
     if (Platform.isAndroid) {
-      permission = await LocationPermissions().requestPermissions();
-      if (permission == PermissionStatus.granted) goForIt = true;
+      Map<Permission, PermissionStatus> statuses = await
+      [ Permission.bluetoothScan,
+        Permission.bluetoothAdvertise,
+        Permission.bluetoothConnect,
+      Permission.locationWhenInUse, Permission.location].
+      request();
+      goForIt = true;
+
+   //   if (permission == PermissionStatus.granted) goForIt = true;
     } else if (Platform.isIOS) {
       goForIt = true;
     }
@@ -233,7 +241,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
           actions: [
             IconButton(
               icon: Image.asset('assets/images/Dashboard/bluetooth.png',
-                  color: Colors.lightBlueAccent),
+                  color: Colors.lightBlueAccent, height: 20, width: 20),
               onPressed: () {
                 if (_scanning) {
                   bleController.scanner.stopScan();
@@ -281,7 +289,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
               ),
               Container(
                   margin: const EdgeInsets.all(5.0),
-                  height: 150,
+                  height: 75,
                   child: ListView.builder(
                     itemCount: _foundBleUARTDevices.length,
                     itemBuilder: (context, index) => ListTile(
@@ -304,7 +312,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                     ),
                   )),
               SizedBox(
-                height: 30,
+                height: 10,
               ),
               Padding(
                   padding: EdgeInsets.all(5),
@@ -333,7 +341,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: Colors.blue, width: 2)),
-                  height: 150,
+                  height: 100,
                   child: Scrollbar(
                       child: SingleChildScrollView(
                           child: Padding(padding: EdgeInsets.all(5), child: Text(

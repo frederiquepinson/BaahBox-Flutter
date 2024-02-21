@@ -28,7 +28,7 @@ import 'package:baahbox/games/spaceShip/components/meteorComponent.dart';
 class MeteorManager extends TimerComponent with HasGameRef<SpaceShipGame> {
   final Random random = Random();
   final meteor1Sprite =
-      Sprite(Flame.images.fromCache('Jeux/Spaceship/meteor_01@3x.png'));
+      Sprite(Flame.images.fromCache('Games/Spaceship/meteor_01@3x.png'));
 
   MeteorManager() : super(period: 2, repeat: true);
 

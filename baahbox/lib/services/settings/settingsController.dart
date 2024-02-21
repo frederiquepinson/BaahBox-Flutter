@@ -29,7 +29,7 @@ class SettingsController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final _status = Rx<RxStatus>(RxStatus.empty());
-  var _currentSensorType = SensorType.none.obs;
+  var _currentSensorType = SensorType.muscle.obs;
 
 var _genericSettings = <String, Object>{
   "sensitivity": Sensitivity.medium,

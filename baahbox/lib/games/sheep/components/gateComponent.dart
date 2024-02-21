@@ -29,7 +29,7 @@ class GateComponent extends SpriteComponent
 
   late ObjectVelocity speedScale;
   final Vector2 deltaPosition = Vector2.zero();
-  final obstacleSprite = Sprite(Flame.images.fromCache('Jeux/Sheep/gate.png'));
+  final obstacleSprite = Sprite(Flame.images.fromCache('Games/Sheep/gate.png'));
   var isNewComer = true;
   late Vector2 speed;
 
