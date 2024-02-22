@@ -18,6 +18,9 @@
  */
 
 import 'dart:math' as math;
+import 'dart:math';
+import 'dart:core';
+import 'package:baahbox/games/toad/components/tongueComponent.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/components.dart';
 import 'package:baahbox/games/toad/toadGame.dart';
@@ -58,6 +61,7 @@ class ToadComponent extends SpriteComponent
   @override
   void update(double dt) {
     super.update(dt);
+    checkFlies();
   }
 
   void hide() {
@@ -77,6 +81,16 @@ class ToadComponent extends SpriteComponent
     }
   }
 
+  void checkFlies() {
+   // print(gameRef.flyMat);
+    for (double ang in gameRef.flyMat.keys) {
+      print("fly : $ang, toad: $angle");
+      var diff = (ang -angle).abs();
+      if (diff <= pi / 180) {
+        shoot();
+      }
+    }
+  }
   void setSpriteTo(int spriteNb) {
     switch (spriteNb) {
       case 1:
@@ -91,7 +105,10 @@ class ToadComponent extends SpriteComponent
     return SpriteAnimation.spriteList(sprites, stepTime: 1);
   }
 
-  void hit() {
+  void shoot() {
+    gameRef.tongue.priority = -1;
+    gameRef.tongue.showAtAngle(angle);
+    print("shoooot");
     //setSpriteTo(3);
    // game.add(BimComponent(
     //    position: Vector2(position.x + size.x/2, position.y - size.y - 20)));

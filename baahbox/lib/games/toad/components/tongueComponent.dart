@@ -24,36 +24,33 @@ import 'package:flame/flame.dart';
 import 'package:flame/components.dart';
 import 'package:baahbox/games/toad/toadGame.dart';
 
-class FlyComponent extends SpriteComponent
+class TongueComponent extends SpriteComponent
     with  HasVisibility, HasGameRef<ToadGame> {
-  FlyComponent({required super.size}) : super(anchor: Anchor.center);
+  TongueComponent({required super.position}) : super(anchor: Anchor.bottomCenter);
 
-  final flySprite = Sprite(Flame.images.fromCache('Games/Toad/fly.png'));
-
+  final tongueSprite = Sprite(Flame.images.fromCache('Games/Toad/tongue.png'));
   late final _timer = TimerComponent(
-    period: 5,//3,
-    onTick: disappear,
+    period: .3,
+    onTick: hide,
     autoStart: false,
   );
 
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    await add(_timer);
     initialize();
   }
 
   void initialize() {
-    this.sprite = flySprite;
-    var ratio = flySprite.srcSize.x / flySprite.srcSize.y;
-    var width = gameRef.size.x/10;
+    this.sprite = tongueSprite;
+    var ratio = tongueSprite.srcSize.x / tongueSprite.srcSize.y;
+    var width = gameRef.size.x/30;
     size = Vector2(width,width/ratio);
-
-    gameRef.registerToFlyNet(position);
-    show();
-    _timer.timer.start();
-
+    priority = 2;
+    hide();
   }
+
+
 
   @override
   void update(double dt) {
@@ -68,14 +65,16 @@ class FlyComponent extends SpriteComponent
     isVisible = true;
   }
 
-  void disappear() {
-    this.add(OpacityEffect.fadeOut(EffectController(duration: 0.75)));
-    gameRef.unRegisterFromFlyNet(position);
-    removeFromParent();
+  void showAtAngle(double destAngle) {
+    isVisible = true;
+    angle = destAngle;
+    _timer.timer.start();
+
   }
 
-  void takeHit() {
-    disappear();
+  void disappear() {
+    this.add(OpacityEffect.fadeOut(EffectController(duration: 0.75)));
+    removeFromParent();
   }
 }
 
