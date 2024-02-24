@@ -208,7 +208,6 @@ class SheepGame extends BBGame with TapCallbacks, HasCollisionDetection {
       switch (sensorType) {
         case SensorType.muscle:
           final jumpHeigth = floorY * (1 - (input / 100));
-          // print("floorY: $floorY, height: $jumpHeigth");
           sheep.moveTo(jumpHeigth);
         case SensorType.arcadeJoystick:
           var joystickInput = appController.joystickInput;

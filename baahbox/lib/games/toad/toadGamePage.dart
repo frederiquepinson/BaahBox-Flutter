@@ -50,7 +50,7 @@ class ToadGamePage extends StatelessWidget {
                 icon: Image.asset(
                     'assets/images/Dashboard/settings_icon.png',
                     width: 25, height: 25, color: mainColor),
-                onPressed: () => Get.toNamed('/toadSettings')),
+                onPressed: () => Get.toNamed('/settings')),
           ],
         ),
         body: Stack(children: [
