@@ -53,6 +53,7 @@ class ToadComponent extends SpriteComponent
     var ratio = toadSprite.srcSize.x / toadSprite.srcSize.y;
     var width = gameRef.size.x * 3/8;
     size = Vector2(width,width/ratio);
+    anchor = Anchor.center;
     position =  Vector2(gameRef.size.x / 2, gameRef.size.y - size.y -50);
     angle = nativeAngle;
     show();
@@ -82,11 +83,10 @@ class ToadComponent extends SpriteComponent
   }
 
   void checkFlies() {
-   // print(gameRef.flyMat);
-    for (double ang in gameRef.flyMat.keys) {
-      print("fly : $ang, toad: $angle");
-      var diff = (ang -angle).abs();
-      if (diff <= pi / 180) {
+    for ( double x in gameRef.flyNet.keys) {
+      var target = Vector2(x, gameRef.flyNet[x]!);
+      var angleToTarget = angleTo(target);
+      if (angleToTarget.abs() <= pi / 360) {
         shoot();
       }
     }
@@ -109,6 +109,7 @@ class ToadComponent extends SpriteComponent
     gameRef.tongue.priority = -1;
     gameRef.tongue.showAtAngle(angle);
     print("shoooot");
+    // animateToadForShooting();
     //setSpriteTo(3);
    // game.add(BimComponent(
     //    position: Vector2(position.x + size.x/2, position.y - size.y - 20)));

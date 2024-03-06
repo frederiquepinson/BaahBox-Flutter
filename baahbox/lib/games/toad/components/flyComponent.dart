@@ -19,19 +19,22 @@
 
 import 'dart:io';
 import 'dart:math' as math;
+import 'package:baahbox/games/toad/components/tongueComponent.dart';
+import 'package:flame/collisions.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/components.dart';
 import 'package:baahbox/games/toad/toadGame.dart';
 
 class FlyComponent extends SpriteComponent
-    with  HasVisibility, HasGameRef<ToadGame> {
-  FlyComponent({required super.size}) : super(anchor: Anchor.center);
+    with  HasVisibility, HasGameRef<ToadGame>, CollisionCallbacks {
+  // FlyComponent({required super.size}) : super(anchor: Anchor.center);
+  FlyComponent() : super(anchor: Anchor.center);
 
-  final flySprite = Sprite(Flame.images.fromCache('Games/Toad/fly.png'));
+  final flySprite = Sprite(Flame.images.fromCache('Games/Toad/fly50.png'));
 
   late final _timer = TimerComponent(
-    period: 5,//3,
+    period: 5,
     onTick: disappear,
     autoStart: false,
   );
@@ -45,14 +48,21 @@ class FlyComponent extends SpriteComponent
 
   void initialize() {
     this.sprite = flySprite;
-    var ratio = flySprite.srcSize.x / flySprite.srcSize.y;
-    var width = gameRef.size.x/10;
-    size = Vector2(width,width/ratio);
+    //var ratio = flySprite.srcSize.x / flySprite.srcSize.y;
+    //var width = gameRef.size.x/10;
+   // size = Vector2(width,width/ratio);
+    anchor = Anchor.center;
+    add(CircleHitbox());
 
     gameRef.registerToFlyNet(position);
     show();
     _timer.timer.start();
+  }
 
+  void setPositionTo(Vector2 newPosition){
+    gameRef.unRegisterFromFlyNet(position);
+    position = newPosition;
+    gameRef.registerToFlyNet(position);
   }
 
   @override
@@ -69,13 +79,22 @@ class FlyComponent extends SpriteComponent
   }
 
   void disappear() {
-    this.add(OpacityEffect.fadeOut(EffectController(duration: 0.75)));
     gameRef.unRegisterFromFlyNet(position);
+    hide();
     removeFromParent();
   }
 
-  void takeHit() {
-    disappear();
+  @override
+  void onCollisionStart(
+      Set<Vector2> intersectionPoints,
+      PositionComponent other,
+      ) {
+    print("collision!!!");
+    super.onCollisionStart(intersectionPoints, other);
+    if (other is TongueComponent) {
+      other.takeHit();
+      disappear();
+    }
   }
 }
 

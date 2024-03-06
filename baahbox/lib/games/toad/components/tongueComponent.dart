@@ -19,18 +19,19 @@
 
 import 'dart:io';
 import 'dart:math' as math;
+import 'package:flame/collisions.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/components.dart';
 import 'package:baahbox/games/toad/toadGame.dart';
 
 class TongueComponent extends SpriteComponent
-    with  HasVisibility, HasGameRef<ToadGame> {
+    with  HasVisibility, HasGameRef<ToadGame>, CollisionCallbacks {
   TongueComponent({required super.position}) : super(anchor: Anchor.bottomCenter);
 
   final tongueSprite = Sprite(Flame.images.fromCache('Games/Toad/tongue.png'));
   late final _timer = TimerComponent(
-    period: .3,
+    period: .25,
     onTick: hide,
     autoStart: false,
   );
@@ -38,7 +39,9 @@ class TongueComponent extends SpriteComponent
   @override
   Future<void> onLoad() async {
     super.onLoad();
+    await add(_timer);
     initialize();
+    add(RectangleHitbox(collisionType: CollisionType.passive));
   }
 
   void initialize() {
@@ -66,15 +69,18 @@ class TongueComponent extends SpriteComponent
   }
 
   void showAtAngle(double destAngle) {
-    isVisible = true;
     angle = destAngle;
+    show();
     _timer.timer.start();
 
   }
+  void takeHit() {
+  //  disappear();
+  }
 
   void disappear() {
-    this.add(OpacityEffect.fadeOut(EffectController(duration: 0.75)));
-    removeFromParent();
+    this.add(OpacityEffect.fadeOut(EffectController(duration: 0.25)));
+    //removeFromParent();
   }
 }
 
