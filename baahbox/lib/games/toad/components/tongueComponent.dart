@@ -48,7 +48,7 @@ class TongueComponent extends SpriteComponent
     this.sprite = tongueSprite;
     var ratio = tongueSprite.srcSize.x / tongueSprite.srcSize.y;
     var width = gameRef.size.x/30;
-    size = Vector2(width,width/ratio);
+    size = Vector2(width,width/ratio*5);
     priority = 2;
     hide();
   }
@@ -68,8 +68,9 @@ class TongueComponent extends SpriteComponent
     isVisible = true;
   }
 
-  void showAtAngle(double destAngle) {
+  void showAtAngle(double destAngle, double distance) {
     angle = destAngle;
+    scale = Vector2(1.0 ,distance/size.y);
     show();
     _timer.timer.start();
 
@@ -83,4 +84,5 @@ class TongueComponent extends SpriteComponent
     //removeFromParent();
   }
 }
+
 

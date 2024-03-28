@@ -89,7 +89,6 @@ class FlyComponent extends SpriteComponent
       Set<Vector2> intersectionPoints,
       PositionComponent other,
       ) {
-    print("collision!!!");
     super.onCollisionStart(intersectionPoints, other);
     if (other is TongueComponent) {
       other.takeHit();

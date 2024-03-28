@@ -25,7 +25,6 @@ import 'package:flame/events.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/geometry.dart';
-import 'package:flame/math.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:baahbox/controllers/appController.dart';
@@ -58,6 +57,7 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
   var goLeft = false;
   var goRight = false;
   var shoot = false;
+  var autoShootMode = true;
   double floorY = 0.0;
   var flyNet = Map<double, double>();
   var instructionTitle = 'Gobe les mouches';
@@ -169,7 +169,7 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
   }
 
   void startShooting() {
-    toad.shoot();
+    toad.shoot(300.0);
   }
 
   void transformInputInAction() {
@@ -178,12 +178,15 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
       if (!goLeft && !goRight) {
         return;
       }
-      if (shoot) {
+      if (shoot && !autoShootMode) {
         startShooting();
-        print("Shoot!");
       } else {
         var deltaAngle = goLeft ? -1 : 1;
         toad.rotateBy(deltaAngle);
+        if (autoShootMode)
+        {
+          toad.checkFlies();
+        };
 
       }
     }
@@ -239,6 +242,15 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
   }
 
   // Demo mode
+
+
+  // doubletap
+  @override
+  void onLongTapDown(TapDownEvent) {
+    if (state == GameState.running) {
+      startShooting();
+    }
+  }
   // tap input (Demo mode)
   @override
   void onTapDown(TapDownEvent event) {
