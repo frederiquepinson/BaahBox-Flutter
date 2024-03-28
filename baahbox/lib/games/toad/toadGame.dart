@@ -25,7 +25,6 @@ import 'package:flame/events.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/geometry.dart';
-import 'package:flame/math.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:baahbox/controllers/appController.dart';
@@ -34,8 +33,8 @@ import 'package:baahbox/constants/enums.dart';
 import 'package:baahbox/games/BBGame.dart';
 import 'package:baahbox/games/toad/components/toadComponent.dart';
 import 'package:baahbox/services/settings/settingsController.dart';
-
-import 'components/flyComponent.dart';
+import 'package:baahbox/games/toad/components/flyComponent.dart';
+import 'package:baahbox/games/toad/components/tongueComponent.dart';
 
 class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
   final Controller appController = Get.find();
@@ -43,9 +42,12 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
 
   late final Image spriteImage;
   late final ToadComponent toad;
+  late final TongueComponent tongue;
   // late final FlyScoreManager flyScoreManager;
   late final Vector2 toadPosition;
   late final SpawnComponent flyLauncher;
+  late final FlyComponent myFly;
+
 
   int score = 0;
   int threshold = 10;
@@ -55,9 +57,10 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
   var goLeft = false;
   var goRight = false;
   var shoot = false;
+  var autoShootMode = true;
   double floorY = 0.0;
   var flyNet = Map<double, double>();
-  var instructionTitle = 'Evite les météorites';
+  var instructionTitle = 'Gobe les mouches';
   var instructionSubtitle = '';
 
   @override
@@ -77,26 +80,32 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
 
   Future<void> loadComponents() async {
     await add(toad = ToadComponent());
-
+    await add(tongue = TongueComponent(position: toad.position));
     var skyLimit = toad.position.y - toad.size.y;
-    flyLauncher = SpawnComponent.periodRange(
-        factory: (i) => FlyComponent(size: Vector2(50, 50) ),
+    flyLauncher = loadFlyLauncher(skyLimit);
+   //  myFly = FlyComponent(size: Vector2(50,50));
+   // myFly = FlyComponent();
+
+    // await add(flyScoreManager = FlyScoreManager());
+  }
+
+
+  SpawnComponent loadFlyLauncher(double yLimit) {
+    return  SpawnComponent.periodRange(
+        factory: (i) => FlyComponent(),//size: Vector2(50, 50)),
         minPeriod: 1,
         maxPeriod: 3,
         area: Rectangle.fromCenter(
-          center: Vector2(size.x / 2, skyLimit / 3),
-          size: Vector2(size.x - 50, 2 * skyLimit / 3 - 50),
+          center: Vector2(size.x / 2, yLimit / 3),
+          size: Vector2(size.x - 50, 2 * yLimit / 3 - 50),
         ));
-
-    // await add(flyScoreManager = FlyScoreManager());
-    //   await add(tong = TongComponent());
   }
-
   void loadInfoComponents() {}
 
   Future<void> loadAssetsInCache() async {
     await Flame.images.loadAll(<String>[
       'Games/Toad/fly.png',
+      'Games/Toad/fly50.png',
       'Games/Toad/fly_score_empty.png',
       'Games/Toad/fly_score_full.png',
       'Games/Toad/toad.png',
@@ -112,6 +121,7 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
     subTitle = '';
     floorY = size.y - 75.0;
     toadPosition = Vector2(floorY, size.x / 2);
+
   }
 
 // ===================
@@ -158,7 +168,9 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
     }
   }
 
-  void startShooting() {}
+  void startShooting() {
+    toad.shoot(300.0);
+  }
 
   void transformInputInAction() {
     if (appController.isConnectedToBox) {
@@ -166,15 +178,20 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
       if (!goLeft && !goRight) {
         return;
       }
-      if (shoot) {
+      if (shoot && !autoShootMode) {
         startShooting();
-        print("Shoot!");
       } else {
         var deltaAngle = goLeft ? -1 : 1;
         toad.rotateBy(deltaAngle);
+        if (autoShootMode)
+        {
+          toad.checkFlies();
+        };
+
       }
     }
   }
+
 
   void increaseScore() {
     if ((state == GameState.running) && (appController.isActive)) {
@@ -183,8 +200,9 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
   }
 
 // Game State management
-  void resetComponents() {
+  void resetComponents() async {
     toad.initialize();
+    clearTheSky();
     flyNet = Map();
     add(flyLauncher);
   }
@@ -193,6 +211,8 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
   void startGame() {
     initializeParams();
     resetComponents();
+    //add(myFly);
+    //myFly.setPositionTo(Vector2(200, 100));
     super.startGame();
   }
 
@@ -222,19 +242,24 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
   }
 
   // Demo mode
+
+
+  // doubletap
+  @override
+  void onLongTapDown(TapDownEvent) {
+    if (state == GameState.running) {
+      startShooting();
+    }
+  }
   // tap input (Demo mode)
   @override
   void onTapDown(TapDownEvent event) {
     if (state == GameState.running) {
       var xTouch = event.localPosition.x;
       var coeff = xTouch > size.x / 2 ? 1 : -1;
-      //Todo calculer cos angle / x
-      print("touchdown!  deltaAngle = $coeff * 5");
-
       var newAngle = toad.angle + (coeff * 5 / 180 * math.pi);
       if (newAngle < tau / 4 && newAngle > -tau / 4) {
         toad.add(RotateEffect.to(newAngle, EffectController(duration: 0.5)));
-        //toad.rotateBy(coeff * 2);
       }
     }
   }
@@ -246,22 +271,19 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
     } else {
       var xTouch = info.eventPosition.global.x;
       var coeff = (xTouch > size.x / 2) ? 1 : -1;
-      //TOdo calculer cos angle / x
-      print("pan!  deltaAngle = $coeff * 5");
       toad.rotateBy(coeff * 5);
       // var newAngle = toad.angle + ((coeff * 5)/ 180 * math.pi);
       // if ( newAngle <  15/9 && newAngle > -15/9) {
       //   toad.add(RotateEffect.to(newAngle, EffectController(duration: 0.3)));
       // }
       var nAngle = toad.angle;
-      print("toad angle : $nAngle");
     }
   }
 
   void clearTheSky() {
     for (var child in children) {
       if (child is FlyComponent) {
-        child.removeFromParent();
+        child.disappear();
       }
     }
   }
@@ -272,5 +294,9 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
 
   void unRegisterFromFlyNet(Vector2 position) {
     flyNet.remove(position.x); //todo mettre l'angle et la distance
+  }
+
+  double coordToGradian(double x, double y) {
+    return x*y;
   }
 }

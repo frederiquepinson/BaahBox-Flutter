@@ -55,7 +55,7 @@ class StarGame extends BBGame with TapCallbacks {
       'Games/Star/game_star.png',
       'Games/Star/game_star_shining.png',
     ]);
-    loadInfoComponents();
+   // loadInfoComponents();
     title = instructionTitle;
     subTitle = instructionSubtitle;
     feedback = feedBackTitle;
@@ -70,7 +70,7 @@ class StarGame extends BBGame with TapCallbacks {
     if (appController.isActive) {
       if (isRunning) {
         refreshInput();
-        scoreText.text = 'Score: $input';
+       //scoreText.text = 'Score: $input';
         updateOverlaysAndState();
       }
     }
@@ -149,14 +149,14 @@ class StarGame extends BBGame with TapCallbacks {
     } else {
       var yPos = info.eventPosition.global.y;
       panInput = ((canvasSize.y - yPos) * 1024.0 / canvasSize.y).toInt();
-      print(
-          "panInput : ${panInput} :::  panY : ${yPos} vs game ${canvasSize.y}");
+      // print(
+      //     "panInput : ${panInput} :::  panY : ${yPos} vs game ${canvasSize.y}");
     }
   }
 
   @override
   void onTapDown(TapDownEvent event) {
     super.onTapDown(event);
-    print("state : $state ");
+   // print("state : $state ");
   }
 }

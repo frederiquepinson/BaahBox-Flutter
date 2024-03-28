@@ -18,6 +18,8 @@
  */
 
 import 'dart:math' as math;
+import 'dart:math';
+import 'dart:core';
 import 'package:flame/flame.dart';
 import 'package:flame/components.dart';
 import 'package:baahbox/games/toad/toadGame.dart';
@@ -50,6 +52,7 @@ class ToadComponent extends SpriteComponent
     var ratio = toadSprite.srcSize.x / toadSprite.srcSize.y;
     var width = gameRef.size.x * 3/8;
     size = Vector2(width,width/ratio);
+    anchor = Anchor.center;
     position =  Vector2(gameRef.size.x / 2, gameRef.size.y - size.y -50);
     angle = nativeAngle;
     show();
@@ -77,6 +80,16 @@ class ToadComponent extends SpriteComponent
     }
   }
 
+  void checkFlies() {
+    for (double x in gameRef.flyNet.keys) {
+      var _flyX = gameRef.flyNet[x]!;
+      var target = Vector2(x, _flyX);
+      var angleToTarget = angleTo(target);
+      if (angleToTarget.abs() <= pi / 360) {
+        shoot(position.distanceTo(target));
+      }
+    }
+  }
   void setSpriteTo(int spriteNb) {
     switch (spriteNb) {
       case 1:
@@ -91,7 +104,11 @@ class ToadComponent extends SpriteComponent
     return SpriteAnimation.spriteList(sprites, stepTime: 1);
   }
 
-  void hit() {
+  void shoot(double distance) {
+    gameRef.tongue.priority = -1;
+    gameRef.tongue.showAtAngle(angle, distance);
+
+    // animateToadForShooting();
     //setSpriteTo(3);
    // game.add(BimComponent(
     //    position: Vector2(position.x + size.x/2, position.y - size.y - 20)));
