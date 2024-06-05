@@ -86,7 +86,7 @@ class ToadComponent extends SpriteComponent
       var _flyX = gameRef.flyNet[x]!;
       var target = Vector2(x, _flyX);
       var angleToTarget = angleTo(target);
-       var deltaAngle = automaticMode ?  pi / 360 : pi/ 120;
+       var deltaAngle = automaticMode ?  pi / 360 : pi/ 90;
       if (angleToTarget.abs() <= deltaAngle) {
         shoot(distance: position.distanceTo(target));
         gotOne = true;

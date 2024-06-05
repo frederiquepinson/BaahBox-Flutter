@@ -44,7 +44,6 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
   late final ToadComponent toad;
   late final TongueComponent tongue;
   // late final FlyScoreManager flyScoreManager;
-  late final Vector2 toadPosition;
   late final SpawnComponent flyLauncher;
   late final FlyComponent myFly;
 
@@ -56,7 +55,6 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
   var goLeft = false;
   var goRight = false;
   var shoot = false;
-  var autoShootMode = true;
   double floorY = 0.0;
   var flyNet = Map<double, double>();
   var instructionTitle = 'Gobe les mouches';
@@ -120,7 +118,6 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
     title = '';
     subTitle = '';
     floorY = size.y - 150.0;
-    toadPosition = Vector2(floorY, size.x / 2);
   }
 
   // ===================
