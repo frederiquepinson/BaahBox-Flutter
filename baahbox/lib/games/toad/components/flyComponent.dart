@@ -25,19 +25,22 @@ import 'package:flame/effects.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/components.dart';
 import 'package:baahbox/games/toad/toadGame.dart';
+import 'package:baahbox/services/settings/settingsController.dart';
+
+
 
 class FlyComponent extends SpriteComponent
     with  HasVisibility, HasGameRef<ToadGame>, CollisionCallbacks {
-  // FlyComponent({required super.size}) : super(anchor: Anchor.center);
-  FlyComponent() : super(anchor: Anchor.center);
 
+  double flightDuration = 5.0;
   final flySprite = Sprite(Flame.images.fromCache('Games/Toad/fly50.png'));
-
   late final _timer = TimerComponent(
-    period: 5,
+    period: flightDuration,
     onTick: disappear,
     autoStart: false,
   );
+
+  FlyComponent(this.flightDuration) : super(anchor: Anchor.center);
 
   @override
   Future<void> onLoad() async {
@@ -46,14 +49,21 @@ class FlyComponent extends SpriteComponent
     initialize();
   }
 
-  void initialize() {
+  void initialize()  async {
     this.sprite = flySprite;
+   // this.flightDuration = flightDuration;
     //var ratio = flySprite.srcSize.x / flySprite.srcSize.y;
     //var width = gameRef.size.x/10;
    // size = Vector2(width,width/ratio);
+
     anchor = Anchor.center;
     add(CircleHitbox());
-
+    // var  _timer = TimerComponent(
+    //   period: flightDuration,
+    //   onTick: disappear,
+    //   autoStart: false,
+    // );
+    // await add(_timer);
     gameRef.registerToFlyNet(position);
     show();
     _timer.timer.start();

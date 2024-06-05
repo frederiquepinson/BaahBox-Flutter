@@ -92,7 +92,7 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
 
   SpawnComponent loadFlyLauncher(double yLimit) {
     return  SpawnComponent.periodRange(
-        factory: (i) => FlyComponent(),//size: Vector2(50, 50)),
+        factory: (i) => FlyComponent(settingsController.toadSettings["flySteadyTime"]),//size: Vector2(50, 50)),
         minPeriod: 1,
         maxPeriod: 3,
         area: Rectangle.fromCenter(
@@ -124,7 +124,7 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
 
   }
 
-// ===================
+  // ===================
   // MARK: - Game loop
   // ===================
 
