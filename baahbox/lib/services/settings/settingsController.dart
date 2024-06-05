@@ -42,17 +42,18 @@ var _genericSettings = <String, Object>{
   }.obs;
 
 var _spaceShipSettings = SpaceShipSettings().obs;
+var _toadSettings = ToadSettings().obs;
 
   var _sheepSettings = <String, Object>{
     "gateVelocity": ObjectVelocity.medium,
     "numberOfGates": 3,
   }.obs;
 
-  var _toadSettings = <String, Object>{
-    "flySteadyTime": 3,
-    "numberOfFlies": 5,
-    "shootingType": ShootingType.automatic,
-  }.obs;
+  // var _toadSettings = <String, Object>{
+  //   "flySteadyTime": 3,
+  //   "numberOfFlies": 5,
+  //   "shootingType": ShootingType.automatic,
+  // }.obs;
 
 
 // getters
@@ -60,7 +61,7 @@ var _spaceShipSettings = SpaceShipSettings().obs;
 
   Map get sheepSettings => _sheepSettings;
   SpaceShipSettings get spaceShipSettings => _spaceShipSettings.value;
-  Map get toadShipSettings => _toadSettings;
+  ToadSettings get toadSettings => _toadSettings.value;
   Map get genericSettings => _genericSettings;
 
   RxStatus get status => _status.value;
@@ -139,6 +140,7 @@ var _spaceShipSettings = SpaceShipSettings().obs;
       print("Null value !");
     }
   }
+
   void setAsteroidSpeedTo(ObjectVelocity? velocity) {
     if (velocity != null) {
       _spaceShipSettings.value.asteroidVelocity = velocity;
@@ -148,6 +150,41 @@ var _spaceShipSettings = SpaceShipSettings().obs;
       print("Null value !");
     }
   }
+
+  // Toad
+  void setToadShootingMode(ShootingType? shootingType) {
+    if (shootingType != null) {
+      _toadSettings.value.shootingType = shootingType;
+      var shootType = toadSettings.shootingType;
+      print("shooting Type: $shootType");
+    } else {
+      _toadSettings.value.shootingType = ShootingType.automatic;
+      print("Null value for shooting type ! using default !");
+    }
+  }
+  void setNumberOfFliesTo(int? value) {
+    if (value != null) {
+      _toadSettings.value.numberOfFlies = value > 0 ? value : 3;
+      var nFlies = toadSettings.numberOfFlies;
+      print("number of flies : $nFlies");
+    } else {
+      _toadSettings.value.numberOfFlies = 3;
+      showMyToast("Null value for number of flies !");
+    }
+  }
+
+  void setFlyDuration(int? value) {
+    if (value != null) {
+      _toadSettings.value.flySteadyTime = value > 0 ? value : 5;
+      var flyDuration = toadSettings.flySteadyTime;
+      print("number of flies : $flyDuration");
+    } else {
+      showMyToast("Null value for flies steady time !");
+    }
+  }
+
+
+  ShootingType shootingType =  ;
 
   void showMyToast(String message) {
     Get.snackbar(
@@ -170,4 +207,11 @@ var _spaceShipSettings = SpaceShipSettings().obs;
 class SpaceShipSettings {
   ObjectVelocity asteroidVelocity =  ObjectVelocity.low;
   int numberOfShips = 5;
+}
+
+
+class ToadSettings {
+    int flySteadyTime =  3;
+    int numberOfFlies = 5;
+    ShootingType shootingType =  ShootingType.automatic;
 }
