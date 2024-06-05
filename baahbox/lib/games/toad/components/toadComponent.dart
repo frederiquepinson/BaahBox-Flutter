@@ -90,7 +90,6 @@ class ToadComponent extends SpriteComponent
       if (angleToTarget.abs() <= deltaAngle) {
         shoot(distance: position.distanceTo(target));
         gotOne = true;
-        print("gotOne!");
       }
     }
     return gotOne;

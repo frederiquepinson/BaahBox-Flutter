@@ -53,8 +53,6 @@ class TongueComponent extends SpriteComponent
     hide();
   }
 
-
-
   @override
   void update(double dt) {
     super.update(dt);
