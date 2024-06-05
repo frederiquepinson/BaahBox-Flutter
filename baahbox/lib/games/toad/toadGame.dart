@@ -48,7 +48,6 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
   late final SpawnComponent flyLauncher;
   late final FlyComponent myFly;
 
-
   int score = 0;
   int threshold = 10;
   var panInput = 0;
@@ -83,16 +82,16 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
     await add(tongue = TongueComponent(position: toad.position));
     var skyLimit = toad.position.y - toad.size.y;
     flyLauncher = loadFlyLauncher(skyLimit);
-   //  myFly = FlyComponent(size: Vector2(50,50));
-   // myFly = FlyComponent();
+    //  myFly = FlyComponent(size: Vector2(50,50));
+    // myFly = FlyComponent();
 
     // await add(flyScoreManager = FlyScoreManager());
   }
 
-
   SpawnComponent loadFlyLauncher(double yLimit) {
-    return  SpawnComponent.periodRange(
-        factory: (i) => FlyComponent(settingsController.toadSettings["flySteadyTime"]),//size: Vector2(50, 50)),
+    return SpawnComponent.periodRange(
+        factory: (i) => FlyComponent(settingsController
+            .toadSettings["flySteadyTime"]), //size: Vector2(50, 50)),
         minPeriod: 1,
         maxPeriod: 3,
         area: Rectangle.fromCenter(
@@ -100,6 +99,7 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
           size: Vector2(size.x - 50, 2 * yLimit / 3 - 50),
         ));
   }
+
   void loadInfoComponents() {}
 
   Future<void> loadAssetsInCache() async {
@@ -119,9 +119,8 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
   void initializeUI() {
     title = '';
     subTitle = '';
-    floorY = size.y - 75.0;
+    floorY = size.y - 150.0;
     toadPosition = Vector2(floorY, size.x / 2);
-
   }
 
   // ===================
@@ -162,6 +161,7 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
           var joystickInput = appController.joystickInput;
           goLeft = joystickInput.left;
           goRight = joystickInput.right;
+          shoot = joystickInput.up;
 
         default:
       }
@@ -169,29 +169,29 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
   }
 
   void startShooting() {
-    toad.shoot(300.0);
+    if (!toad.checkFlies(automaticMode: false)) {
+      toad.shoot();
+    }
   }
 
   void transformInputInAction() {
     if (appController.isConnectedToBox) {
       // Todo gérer strengthValue et hardnessCoeff
-      if (!goLeft && !goRight) {
+      if (!goLeft && !goRight && !shoot) {
         return;
       }
-      if (shoot && !autoShootMode) {
+      if (shoot && !settingsController.toadSettings["iShootingModeAutomatic"]) {
         startShooting();
       } else {
         var deltaAngle = goLeft ? -1 : 1;
         toad.rotateBy(deltaAngle);
-        if (autoShootMode)
-        {
+        if (settingsController.toadSettings["iShootingModeAutomatic"]) {
           toad.checkFlies();
-        };
-
+        }
+        ;
       }
     }
   }
-
 
   void increaseScore() {
     if ((state == GameState.running) && (appController.isActive)) {
@@ -243,7 +243,6 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
 
   // Demo mode
 
-
   // doubletap
   @override
   void onLongTapDown(TapDownEvent) {
@@ -251,6 +250,7 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
       startShooting();
     }
   }
+
   // tap input (Demo mode)
   @override
   void onTapDown(TapDownEvent event) {
@@ -297,6 +297,6 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
   }
 
   double coordToGradian(double x, double y) {
-    return x*y;
+    return x * y;
   }
 }
