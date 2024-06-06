@@ -42,10 +42,6 @@ class SettingsPage extends StatelessWidget {
         body:ListView(
     padding: const EdgeInsets.all(0),
     children:
-            // Column(
-            //     mainAxisSize: MainAxisSize.max,
-            //     crossAxisAlignment: CrossAxisAlignment.stretch,
-            //     children:
             [
                    Card(
                     shape: ContinuousRectangleBorder(),
@@ -127,6 +123,24 @@ class SettingsPage extends StatelessWidget {
                     => Get.toNamed(BBRoute.toadSettings.path),
                     title: Text('Gobe les mouches'),
                   ),
+              Card(
+                shape: ContinuousRectangleBorder(),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child:
+                  const Text('',),),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              ListTile(
+                trailing: Icon(Icons.arrow_forward_outlined),
+                dense: false,
+                enabled: true,
+                onTap: ()
+                => Get.toNamed(BBRoute.termsAndConditions.path),
+                title: Text('A propos'),
+              ),
             ]));
   }
 }

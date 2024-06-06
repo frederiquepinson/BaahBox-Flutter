@@ -19,6 +19,7 @@
 
 import 'package:baahbox/welcome.dart';
 import 'package:baahbox/services/settings/settingsPage.dart';
+import 'package:baahbox/services/settings/termsAndConditionsPage.dart';
 import 'package:baahbox/services/settings/generalSettingsPage.dart';
 import 'package:baahbox/services/settings/spaceShipSettingsPage.dart';
 import 'package:baahbox/services/settings/sheepSettingsPage.dart';
@@ -44,7 +45,8 @@ enum BBRoute {
   generalSettings(path: "/generalSettings"),
   sheepSettings(path: "/sheepSettings"),
   toadSettings(path: "/toadSettings"),
-  spaceShipSettings(path: "/spaceShipSettings");
+  spaceShipSettings(path: "/spaceShipSettings"),
+  termsAndConditions(path: "/termsAndConditions");
 
 
   const BBRoute({required this.path});
@@ -68,5 +70,6 @@ class BBRoutes {
     GetPage(page: () => SheepGamePage(), name: BBRoute.sheep.path),
     GetPage(page: () => SpaceShipGamePage(), name: BBRoute.spaceShip.path),
     GetPage(page: () => StarGamePage(), name: BBRoute.star.path),
+    GetPage(page: () => const TermsAndConditionsPage(), name: BBRoute.termsAndConditions.path),
   ];
 }
