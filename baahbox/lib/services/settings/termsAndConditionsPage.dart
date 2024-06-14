@@ -57,7 +57,7 @@ class TermsAndConditionsPage extends StatelessWidget {
                 dense: false,
                 enabled: true,
                 onTap: ()
-                => Get.toNamed(BBRoute.settings.path),
+                => Get.toNamed(BBRoute.cgu.path),
                 title: Text("Conditions d'utilisation"),
               ),
               const SizedBox(
@@ -69,7 +69,7 @@ class TermsAndConditionsPage extends StatelessWidget {
                 dense: false,
                 enabled: true,
                 onTap: ()
-                => Get.toNamed(BBRoute.spaceShipSettings.path),
+                => Get.toNamed(BBRoute.legals.path),
                 title: Text('Mentions Légales'),
               ),
             ]));
