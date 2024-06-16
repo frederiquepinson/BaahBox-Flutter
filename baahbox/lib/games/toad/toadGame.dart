@@ -151,8 +151,7 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
     if (appController.isConnectedToBox) {
       var sensorType = settingsController.currentSensor;
       switch (sensorType) {
-        case Sensor
-              .muscle: // The strength is in range [0...1024] -> Have it fit into [0...100]
+        case Sensor.muscle: // The strength is in range [0...1024] -> Have it fit into [0...100]
           inputR = (appController.musclesInput.muscle1 ~/ 10);
           inputL = (appController.musclesInput.muscle2 ~/ 10);
           print("toad: inputL= $inputL, inputR = $inputR");

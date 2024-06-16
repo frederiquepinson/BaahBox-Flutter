@@ -26,12 +26,12 @@ import 'package:baahbox/controllers/appController.dart';
 class SettingsController extends GetxController {
   final Controller appController = Get.find();
 
-  var _currentSensor = Sensor.muscle.obs;
+  var _currentSensor = Sensor.arcadeJoystick.obs;
 
   // TODO: use classes instead of maps
   var _genericSettings = <String, Object>{
     "sensitivity": Sensitivity.medium,
-    "sensor": Sensor.muscle,
+    "sensor": Sensor.arcadeJoystick,
     "numberOfSensors": 1,
     "threshold": 0.2,
     "demoMode": false,

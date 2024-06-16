@@ -30,7 +30,6 @@ class GeneralSettingsPage extends GetView<SettingsController> {
   final Controller appController = Get.find();
 
   final mainColor = BBColor.pinky.color;
-  double _currentSliderValue = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +82,7 @@ class GeneralSettingsPage extends GetView<SettingsController> {
           const SizedBox(
             height: 36,
           ),
-          Card(
+    Obx(() =>  appController.currentSensor == Sensor.muscle ? Card(
               shape: ContinuousRectangleBorder(),
               child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -103,11 +102,13 @@ class GeneralSettingsPage extends GetView<SettingsController> {
                             fontSize: 12,
                           ),
                         ),
-                      ]))),
+                      ]))):  const SizedBox(
+            height: 12,
+          )),
           const SizedBox(
             height: 12,
           ),
-          ListTile(
+    Obx(() => appController.currentSensor == Sensor.muscle ? ListTile(
               title: Text("Muscle1"),
               trailing: Obx(() => Switch(
                 value: controller.genericSettings["isSensor1On"],
@@ -115,11 +116,13 @@ class GeneralSettingsPage extends GetView<SettingsController> {
                 onChanged: (bool val) {
                   controller.setMuscle1To(val);
                 },
-              ))),
+              ))): const SizedBox(
+    height: 5,
+    )),
           const SizedBox(
             height: 5,
           ),
-          ListTile(
+    Obx(() => appController.currentSensor == Sensor.muscle ? ListTile(
           title: Text("Muscle2"),
           trailing: Obx(() => Switch(
           value: controller.genericSettings["isSensor2On"],
@@ -127,7 +130,9 @@ class GeneralSettingsPage extends GetView<SettingsController> {
           onChanged: (bool val) {
             controller.setMuscle2To(val);
           },
-          ))),
+          ))):  const SizedBox(
+            height: 5,
+          )),
     //       Card(
     //           shape: ContinuousRectangleBorder(),
     // child: Padding(

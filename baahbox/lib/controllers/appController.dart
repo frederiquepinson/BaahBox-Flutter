@@ -16,7 +16,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:baahbox/model/sensorInput.dart';
 import 'package:baahbox/constants/enums.dart';
 import 'package:baahbox/services/ble/getXble/getx_ble.dart';
@@ -31,7 +32,7 @@ class Controller extends FullLifeCycleController with FullLifeCycleMixin {
   var _isConnectedToBox = false.obs;
   var _connectedDeviceName = "".obs;
   var _connectedDeviceId = "".obs;
-  var _currentSensor = Sensor.muscle.obs;
+  var _currentSensor = Sensor.arcadeJoystick.obs;
   var _isActive = false.obs;
   var _isDebugging = true.obs;
 
@@ -126,5 +127,23 @@ class Controller extends FullLifeCycleController with FullLifeCycleMixin {
   void onResumed() {
     print('appController - onResumed called');
     _isActive.value = true;
+  }
+
+
+  void showMyToast(String message) {
+    Get.snackbar(
+      "Sélectionnez votre Baah Box pour commencer !",
+      message,
+      snackPosition: SnackPosition.TOP,
+      colorText: Colors.white,
+      borderRadius: 10,
+      backgroundColor: BBGameList.sheep.baseColor.color,
+      icon: Image.asset(
+        "assets/images/Dashboard/bluetooth.png",
+        height: 40,
+        width: 40,
+        //color: Colors.white,
+      ),
+    );
   }
 }
