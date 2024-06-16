@@ -44,8 +44,8 @@ class StarGamePage extends StatelessWidget {
           actions: [
             Container(
                 width: 25,
-                child: Image.asset('assets/images/Dashboard/demo_icon.png',
-                    color: mainColor)),
+                child: Obx(() => Image.asset(appController.currentSensor.asset,
+                    color: mainColor))),
             // SizedBox(
             //   width: 15,
             // ),

@@ -19,17 +19,19 @@
 
 import 'package:baahbox/model/sensorInput.dart';
 import 'package:baahbox/constants/enums.dart';
+import 'package:baahbox/services/ble/getXble/getx_ble.dart';
 import 'package:get/get.dart';
 
 class Controller extends FullLifeCycleController with FullLifeCycleMixin {
   static Controller get to => Get.find();
+  final GetxBle bleController = Get.find();
 
   var _musclesInput = MusclesInput(0, 0).obs;
   var _joystickInput = JoystickInput(0).obs;
   var _isConnectedToBox = false.obs;
   var _connectedDeviceName = "".obs;
   var _connectedDeviceId = "".obs;
-
+  var _currentSensor = Sensor.muscle.obs;
   var _isActive = false.obs;
   var _isDebugging = true.obs;
 
@@ -42,16 +44,25 @@ class Controller extends FullLifeCycleController with FullLifeCycleMixin {
   bool get isConnectedToBox => _isConnectedToBox.value;
   bool get isActive => _isActive.value;
   bool get isDebugging => _isDebugging.value;
+  Sensor get currentSensor => _isConnectedToBox.value ? _currentSensor.value: Sensor.none;
 
   // functions
   void setDebugModeTo(bool isDebug) {
     _isDebugging.value = isDebug;
   }
 
+  void setSensorTo(Sensor sensor) {
+      _currentSensor.value = sensor;
+  }
 
   void setConnectionStateTo(bool isConnected) {
     _isConnectedToBox.value = isConnected;
   }
+
+ void updateConnectionState()  {
+   setConnectionStateTo(bleController.isBLEDeviceConnected());
+ }
+
   void setConnectedDeviceNameTo(String  deviceName) {
     _connectedDeviceName.value = deviceName;
   }

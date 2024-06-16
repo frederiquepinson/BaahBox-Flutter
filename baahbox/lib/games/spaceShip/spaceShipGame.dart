@@ -112,6 +112,7 @@ class SpaceShipGame extends BBGame with TapCallbacks, HasCollisionDetection {
   void update(double dt) {
     super.update(dt);
     if (appController.isActive) {
+      appController.updateConnectionState();
       if (state == GameState.running) {
         refreshInput();
         transformInputInOffset();
@@ -129,16 +130,16 @@ class SpaceShipGame extends BBGame with TapCallbacks, HasCollisionDetection {
     goRight = false;
 
     if (appController.isConnectedToBox) {
-      var sensorType = settingsController.usedSensor;
+      var sensorType = settingsController.currentSensor;
       switch (sensorType) {
-        case SensorType.muscle:
+        case Sensor.muscle:
           // The strength is in range [0...1024] -> Have it fit into [0...100]
           inputL = (appController.musclesInput.muscle1 ~/ 10);
           inputR = (appController.musclesInput.muscle2 ~/ 10);
           goLeft = (inputL > threshold) && (inputL > inputR);
           goRight = (inputR > threshold) && (inputR > inputL);
 
-        case SensorType.arcadeJoystick:
+        case Sensor.arcadeJoystick:
           var joystickInput = appController.joystickInput;
           goLeft = joystickInput.right;
           goRight = joystickInput.left;

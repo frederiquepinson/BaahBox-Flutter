@@ -55,6 +55,7 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
   var goLeft = false;
   var goRight = false;
   var shoot = false;
+  var isToadShooting = false;
   double floorY = 0.0;
   var flyNet = Map<double, double>();
   var instructionTitle = 'Gobe les mouches';
@@ -112,7 +113,9 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
     ]);
   }
 
-  void initializeParams() {}
+  void initializeParams() {
+    isToadShooting = false;
+  }
 
   void initializeUI() {
     title = '';
@@ -128,37 +131,40 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
   void update(double dt) {
     super.update(dt);
     if (appController.isActive) {
+      appController.updateConnectionState();
       if (state == GameState.running) {
         refreshInput();
         transformInputInAction();
+        if (settingsController.toadSettings["iShootingModeAutomatic"]) {
+          toad.checkFlies();
+        }
       }
     }
   }
 
   void refreshInput() {
-    // todo deal with joystick input
     inputL = 0;
     inputR = 0;
     goLeft = false;
     goRight = false;
 
     if (appController.isConnectedToBox) {
-      var sensorType = settingsController.usedSensor;
+      var sensorType = settingsController.currentSensor;
       switch (sensorType) {
-        case SensorType
+        case Sensor
               .muscle: // The strength is in range [0...1024] -> Have it fit into [0...100]
           inputR = (appController.musclesInput.muscle1 ~/ 10);
           inputL = (appController.musclesInput.muscle2 ~/ 10);
-          //print("inputL= $inputL, inputR = $inputR");
-          goLeft = (inputL > threshold) && (inputL > inputR);
-          goRight = (inputR > threshold) && !goLeft;
-          shoot = (inputL > 99 && inputR > 99);
+          print("toad: inputL= $inputL, inputR = $inputR");
+          goLeft = (inputL > threshold) && (inputL > inputR) && !isToadShooting;
+          goRight = (inputR > threshold) && !goLeft && !isToadShooting;
+          shoot = (inputL > 99 && inputR > 99 && !isToadShooting);
 
-        case SensorType.arcadeJoystick:
+        case Sensor.arcadeJoystick:
           var joystickInput = appController.joystickInput;
-          goLeft = joystickInput.left;
-          goRight = joystickInput.right;
-          shoot = joystickInput.up;
+          goLeft = joystickInput.left && !isToadShooting;
+          goRight = joystickInput.right && !isToadShooting;
+          shoot = joystickInput.up && !isToadShooting;
 
         default:
       }
@@ -182,10 +188,9 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
       } else {
         var deltaAngle = goLeft ? -1 : 1;
         toad.rotateBy(deltaAngle);
-        if (settingsController.toadSettings["iShootingModeAutomatic"]) {
-          toad.checkFlies();
-        }
-        ;
+        // if (settingsController.toadSettings["iShootingModeAutomatic"]) {
+        //   toad.checkFlies();
+       // }
       }
     }
   }
@@ -274,6 +279,7 @@ class ToadGame extends BBGame with TapCallbacks, HasCollisionDetection {
       //   toad.add(RotateEffect.to(newAngle, EffectController(duration: 0.3)));
       // }
       var nAngle = toad.angle;
+      toad.checkFlies();
     }
   }
 

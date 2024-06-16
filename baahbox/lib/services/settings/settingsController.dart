@@ -26,12 +26,12 @@ import 'package:baahbox/controllers/appController.dart';
 class SettingsController extends GetxController {
   final Controller appController = Get.find();
 
-  var _currentSensorType = SensorType.muscle.obs;
+  var _currentSensor = Sensor.muscle.obs;
 
   // TODO: use classes instead of maps
   var _genericSettings = <String, Object>{
     "sensitivity": Sensitivity.medium,
-    "sensor": SensorType.muscle,
+    "sensor": Sensor.muscle,
     "numberOfSensors": 1,
     "threshold": 0.2,
     "demoMode": false,
@@ -56,7 +56,7 @@ class SettingsController extends GetxController {
   }.obs;
 
 // getters
-  SensorType get usedSensor => _currentSensorType.value;
+  Sensor get currentSensor => _currentSensor.value;
 
   Map get sheepSettings => _sheepSettings;
   Map get genericSettings => _genericSettings;
@@ -78,16 +78,15 @@ class SettingsController extends GetxController {
 
   @override
   void onClose() {
-    // emailController.dispose();
-    // passwordController.dispose();
   }
 
   // ===================
   // Generic settings
   // ===================
 
-  void setSensorTo(SensorType sensor) {
-    _currentSensorType.value = sensor;
+  void setSensorTo(Sensor sensor) {
+    _currentSensor.value = sensor;
+    appController.setSensorTo(sensor);
   }
 
   void setMuscle1To(bool mu1) {
@@ -98,10 +97,10 @@ class SettingsController extends GetxController {
     _genericSettings["isSensor2On"] = mu2;
   }
 
-  void updateSensorTypeTo(SensorType? type) {
-    if (type != null) {
-      setSensorTo(type);
-      _genericSettings["sensor"] = type;
+  void updateSensorTo(Sensor? sensor) {
+    if (sensor != null) {
+      setSensorTo(sensor);
+      _genericSettings["sensor"] = sensor;
     }
   }
 

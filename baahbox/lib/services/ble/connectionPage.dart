@@ -65,6 +65,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
     _connected =
         (bleController.connector.rxBleConnectionState.value.connectionState ==
             DeviceConnectionState.connected);
+    appController.updateConnectionState();
   }
 
   void _disconnect() async {
@@ -78,6 +79,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
     // _connected = false;
     _logTexts = "";
     refreshScreen();
+    appController.updateConnectionState();
   }
 
   void waitBluetoothReady() async {
@@ -175,6 +177,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                   serviceId: serviceUuid,
                   deviceId: event.deviceId);
               subscribeToStream();
+              appController.updateConnectionState();
               appController.setConnectedDeviceIdTo(id);
               appController.setConnectedDeviceNameTo(deviceName);
               bleController.scanner.stopScan();
@@ -189,6 +192,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
           case DeviceConnectionState.disconnected:
             {
               _logTexts = "${_logTexts}Déconnecté de ${deviceName} \n";
+              appController.updateConnectionState();
               appController.setConnectedDeviceIdTo("");
               appController.setConnectedDeviceNameTo("");
               _startScan();
@@ -215,7 +219,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
   void updateControllerWith(List<int> data) {
     var tuples = computeData(data);
     for ((MusclesInput, JoystickInput) tuple in tuples) {
-      //print("${tuple.$1.describe()}, ${tuple.$2.describe()}");
+    //  print("${tuple.$1.describe()}, ${tuple.$2.describe()}");
       appController.setJoystickTo(tuple.$2);
       appController.setMusclesTo(tuple.$1);
     }

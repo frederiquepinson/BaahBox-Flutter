@@ -34,17 +34,30 @@ class ToadComponent extends SpriteComponent
   final toadSprite = Sprite(Flame.images.fromCache('Games/Toad/toad.png'));
   final toadBlinkSprite = Sprite(Flame.images.fromCache('Games/Toad/toad_blink.png'));
 
-
   final blinkingImages = [
     Flame.images.fromCache('Games/Toad/toad.png'),
     Flame.images.fromCache('Games/Toad/toad_blink.png'),
   ];
 
+  late final _binkTimer = TimerComponent(
+    period: .25,
+    onTick: setSpriteTo,
+    autoStart: false,
+  );
+
+  late final _shootTimer = TimerComponent(
+    period: 1.0,
+    onTick: resetToadShooting,
+    autoStart: false,
+  );
+  final Vector2 deltaPosition = Vector2.zero();
+
   @override
   Future<void> onLoad() async {
     super.onLoad();
+    await add(_binkTimer);
+    await add(_shootTimer);
     initialize();
-
   }
 
   void initialize() {
@@ -71,10 +84,24 @@ class ToadComponent extends SpriteComponent
     isVisible = true;
   }
 
+  void blink() {
+    setSpriteTo(spriteNb: 1);
+    _binkTimer.timer.start();
+  }
+
+  void jump() {}
+  void resetToadShooting() {
+    gameRef.isToadShooting = false;
+  }
+
   void rotateBy(int deltaAngle) {
     {
-      var newAngle = angle + (deltaAngle/ 180 * math.pi/2) ;
+      var delta = (deltaAngle/ 180 * math.pi/2);
+      var newAngle = angle + delta;
       if ( newAngle> tau/4 || newAngle < -tau/4) { return ;}
+      for (double interAngle = 0; interAngle < delta; interAngle++) {
+        angle = angle + interAngle;
+      }
       angle = newAngle;
 
     }
@@ -95,7 +122,7 @@ class ToadComponent extends SpriteComponent
     return gotOne;
   }
 
-  void setSpriteTo(int spriteNb) {
+  void setSpriteTo({int spriteNb = 0}) {
     switch (spriteNb) {
       case 1:
         sprite = toadBlinkSprite;
@@ -110,9 +137,11 @@ class ToadComponent extends SpriteComponent
   }
 
   void shoot({double distance = 300.0}) {
+    gameRef.isToadShooting = true;
     gameRef.tongue.priority = -1;
     gameRef.tongue.showAtAngle(angle, distance);
-
+    blink();
+    _shootTimer.timer.start();
     // animateToadForShooting();
     //setSpriteTo(3);
    // game.add(BimComponent(

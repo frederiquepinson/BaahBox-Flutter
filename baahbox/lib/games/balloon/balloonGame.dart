@@ -78,12 +78,12 @@ class BalloonGame extends BBGame with TapCallbacks {
   void refreshInput() {
     // Todo : deal with threshod and sensitivity
     if (appController.isConnectedToBox) {
-      var sensorType = settingsController.usedSensor;
+      var sensorType = settingsController.currentSensor;
       switch (sensorType) {
-        case SensorType.muscle:
+        case Sensor.muscle:
         // The strength is in range [0...1024] -> Have it fit into [0...100]
           input = appController.musclesInput.muscle1;
-        case SensorType.arcadeJoystick:
+        case Sensor.arcadeJoystick:
           var joystickInput = appController.joystickInput;
           if (joystickInput.up && input < 1000) {
             input += 8;

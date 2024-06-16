@@ -22,6 +22,7 @@ import 'package:get/get.dart';
 import 'dart:ui';
 import 'package:baahbox/routes/routes.dart';
 import 'package:baahbox/constants/enums.dart';
+import 'package:baahbox/controllers/appController.dart';
 
 
 class WelcomePage extends StatefulWidget with WidgetsBindingObserver {
@@ -38,6 +39,7 @@ class _WelcomePageState extends State<WelcomePage> {
     final mainColor = BBColor.pinky.color;
     double h = (Get.height/5)-10;
     double w = Get.width;
+    final Controller appController = Get.find();
 
     return Scaffold(
         appBar: AppBar(
@@ -51,8 +53,8 @@ class _WelcomePageState extends State<WelcomePage> {
           actions: [
             Container(
                 width: 25,
-                child: Image.asset('assets/images/Dashboard/demo_icon.png',
-                    color: mainColor)),
+                child: Obx(() => Image.asset(appController.currentSensor.asset,
+                    color: mainColor))),
             IconButton(
                 icon: Image.asset(
                     'assets/images/Dashboard/settings_icon.png',
