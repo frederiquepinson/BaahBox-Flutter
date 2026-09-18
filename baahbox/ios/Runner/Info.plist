@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Baahbox</string>
+	<string>Baah</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -27,9 +27,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>The app uses bluetooth to find, connect and transfer data between different devices</string>
+	<string>Baah would like to use bluetooth to connect to your Baah Box</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>The app uses bluetooth to find, connect and transfer data between different devices</string>
+	<string>Baah would like to use bluetooth to connect to your Baah Box</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
